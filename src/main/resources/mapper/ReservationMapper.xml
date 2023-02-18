@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.springmojocube.mapper.ReservationMapper">
+  <resultMap id="reservationResultMap" type="reservation">
+    <id property="id" column="id"></id>
+    <result property="doctorName" column="doctor_name"></result>
+    <result property="day" column="day"></result>
+    <result property="size" column="size"></result>
+    <result property="status" column="status"></result>
+    <result property="dept.id" column="dept_id"></result>
+    <result property="dept.name" column="dept_name"></result>
+    <result property="title.id" column="title_id"></result>
+    <result property="title.name" column="title_name"></result>
+</resultMap>
+
+    <select id="queryAll" resultMap="reservationResultMap">
+      SELECT r.id,
+             r.doctor_name,
+             r.day,
+             r.size,
+             r.status,
+             r.dept_id,
+             d.name as dept_name,
+             r.title_id,
+             t.name as title_name
+      FROM t_reservation r,
+           t_dept d,
+           t_title t
+      WHERE r.dept_id = d.id
+        AND r.title_id = t.id
+
+    </select>
+</mapper>

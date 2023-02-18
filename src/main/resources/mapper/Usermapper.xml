@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.springmojocube.mapper.UserMapper">
+  <select id="qurryAyNameAndPwd" resultType="com.gxa.springmojocube.entity.User">
+    select
+    id,
+    username as name,
+    password as pwd
+    from
+    tb_user
+    where
+    username = #{username}
+    and
+    password = #{pwd}
+    and
+    status=0;
+  </select>
+</mapper>

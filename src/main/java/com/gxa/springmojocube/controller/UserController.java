@@ -11,7 +11,9 @@ import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -45,10 +47,11 @@ public class UserController {
         dataType = "String",
         required = true),
   })
-  @PostMapping("/user/login")
+  @PutMapping("/user/login")
   public Result login(String name, String pwd) {
     // 加密
     String newPwd = MD5Util.MD5(pwd);
+    System.out.println(newPwd);
     User user = userService.login(name, newPwd);
     if (user != null) {
       Map map = new HashMap<>();

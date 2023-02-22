@@ -3,7 +3,7 @@ package com.gxa.springmojocube.entity;
 import lombok.Data;
 
 /**
- * 预约
+ * 预约实体类
  *
  * @author Mr.Xu/Pluto404
  * @since 9:53 2023/2/19
@@ -11,11 +11,15 @@ import lombok.Data;
  */
 @Data
 public class Reservation {
-  private Integer id;
-  private String doctorName;
-  private Dept dept; // 部门
-  private Title title; // 职称
-  private int day; // 天数
-  private int size; // 最大人数
-  private int status; // 0 可预约 1 不可预约
+  private String id;
+  private String user_name;
+  private String user_sex;
+  private String user_age;
+  private String phone;
+  private String address;
+  private String status; //  状态0为禁用，1为启用
+  private String user_appoint; // 预约人
+  private String department; // 部门
+  private String create_time; // 创建时间
+  private String appoint_time; // 预约时间
 }

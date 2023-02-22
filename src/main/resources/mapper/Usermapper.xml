@@ -6,15 +6,15 @@
   <select id="qurryAyNameAndPwd" resultType="com.gxa.springmojocube.entity.User">
     select
     id,
-    username as name,
-    password as pwd
+    name,
+    pwd
     from
     tb_user
     where
-    username = #{username}
+    name = #{username}
     and
-    password = #{pwd}
+    pwd = #{pwd}
     and
-    status=0;
+    status=1;
   </select>
 </mapper>

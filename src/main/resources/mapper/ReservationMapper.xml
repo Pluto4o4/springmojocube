@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.springmojocube.mapper.ReservationMapper">
   <resultMap id="reservationResultMap" type="reservation">
     <id property="id" column="id"></id>
@@ -13,23 +13,99 @@
     <result property="dept.name" column="dept_name"></result>
     <result property="title.id" column="title_id"></result>
     <result property="title.name" column="title_name"></result>
-</resultMap>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id
+    ,
+          user_name,
+          user_sex,
+          user_age,
+          phone,
+          address,
+          status,
+          user_appoint,
+          department,
+          create_time,
+          appoint_time
+  </sql>
+  <sql id="patient">
+    id,user_name,user_sex,user_age,phone,identity,id_card,province,adress,user_appoint,create_time
+  </sql>
+  <select id="queryAll" resultType="com.gxa.springmojocube.entity.Reservation">
+    select user_name,
+           user_sex,
+           user_age,
+           phone,
+           address,
+           status,
+           user_appoint,
+           department,
+           create_time,
+           appoint_time
+    from appoint
+    where status = 1;
+  </select>
 
-    <select id="queryAll" resultMap="reservationResultMap">
-      SELECT r.id,
-             r.doctor_name,
-             r.day,
-             r.size,
-             r.status,
-             r.dept_id,
-             d.name as dept_name,
-             r.title_id,
-             t.name as title_name
-      FROM t_reservation r,
-           t_dept d,
-           t_title t
-      WHERE r.dept_id = d.id
-        AND r.title_id = t.id
+  <update id="deleteById" parameterType="com.gxa.springmojocube.entity.Reservation">
+    update appoint
+    set status=0
+    where id = #{id};
+  </update>
 
-    </select>
+  <insert id="add" parameterType="com.gxa.springmojocube.entity.Reservation">
+    insert into appoint(<include refid="Base_Column_List"/>) values
+    (#{id},#{user_name},#{user_sex},#{user_age},#{phone},#{address},#{status},#{user_appoint},#{department},#{create_time},#{appoint_time});
+  </insert>
+
+  <update id="deleteByIds" parameterType="java.lang.String">
+    update appoint
+    set status=0
+    where id IN
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
+
+  <select id="selectById" resultType="reservation">
+    select
+    <include refid="Base_Column_List"/>
+    from appoint
+    where user_name=#{user_name};
+  </select>
+
+  <update id="updateById" parameterType="reservation">
+    update appoint
+    <set>
+      <if test="user_name != null">user_name=#{user_name},</if>
+      <if test="user_sex != null">user_sex=#{user_sex},</if>
+      <if test="user_age != null">user_age=#{user_age},</if>
+      <if test="phone != null">phone=#{phone},</if>
+      <if test="address != null">address=#{address},</if>
+      <if test="status != null">status=#{status},</if>
+      <if test="user_appoint != null">user_appoint=#{user_appoint},</if>
+      <if test="department != null">department=#{department},</if>
+      <if test="create_time != null">department=#{department},</if>
+      <if test="appoint_time != null">appoint_time=#{appoint_time}</if>
+    </set>
+    where id=#{id};
+  </update>
+
+  <select id="selectAllpatient" resultType="patient">
+    select
+    <include refid="patient"/>
+    from patient;
+  </select>
+
+  <update id="updateByPatientId" parameterType="patient">
+    update patient
+    set day=#{day}
+    where id = #{id};
+  </update>
+
+  <select id="selectByPatientId"  parameterType="patient" resultType="patient">
+    select
+        <include refid="patient"/>
+    from patient
+    where id=#{id};
+  </select>
 </mapper>

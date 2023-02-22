@@ -11,8 +11,11 @@ import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.websocket.server.PathParam;
 
 /**
  * 用户类
@@ -45,8 +48,8 @@ public class UserController {
         dataType = "String",
         required = true),
   })
-  @PostMapping("/user/login")
-  public Result login(String name, String pwd) {
+  @GetMapping("/user/login")
+  public Result login(@PathParam("name") String name,@PathParam("pwd") String pwd) {
     // 加密
     String newPwd = MD5Util.MD5(pwd);
     User user = userService.login(name, newPwd);

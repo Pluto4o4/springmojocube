@@ -2,8 +2,6 @@ package com.gxa.springmojocube.utils.cache;
 
 
 import lombok.Data;
-
-import java.util.Objects;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 @Data

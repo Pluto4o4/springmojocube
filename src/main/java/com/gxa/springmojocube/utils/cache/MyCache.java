@@ -57,7 +57,7 @@ public class MyCache {
       // 获取延时时间
       long timeout = TimeUnit.SECONDS.convert(time, unit);
       // 将任务封装成实现 Delayed 接口的消息体
-      DelayTask<? extends Runnable> delayMessage = new DelayTask<>(timeout, task, null);
+      DelayTask<? extends Runnable> delayMessage = new DelayTask<>( task,timeout, null);
       // 将消息体放到延时队列中
       delayQueue.put(delayMessage);
    }
@@ -86,7 +86,13 @@ public class MyCache {
       }
 
       // 将任务封装成实现 Delayed 接口的消息体
-      DelayTask<? extends Runnable> delayMessage = new DelayTask<>(timeout, ()->map.remove(k), v);
+      DelayTask<? extends Runnable> delayMessage = new DelayTask<>(new Runnable() {
+         @Override
+         public void run() {
+            map.remove(k);
+            System.err.println("移除"+k);
+         }
+      }, timeout, v);
       map.put(k,delayMessage);
       // 将消息体放到延时队列中
       delayQueue.put(delayMessage);

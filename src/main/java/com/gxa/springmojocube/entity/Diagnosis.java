@@ -1,5 +1,8 @@
 package com.gxa.springmojocube.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -10,20 +13,36 @@ import lombok.Data;
  * @since 2023/2/23 13:41
  */
 @Data
+@TableName("diagnosis")
 public class Diagnosis {
+ @TableId
  private String id;
+ @TableField("title")
  private String title;
+ @TableField("type")
  private String type;
- private String user_name;
+ @TableField("user_name")
+ private String userName;
+ @TableField("department")
   private String department;
-  private String bed_number;
+ @TableField("bed_number")
+  private String bedNumber;
+ @TableField("pic")
   private String pic;
+ @TableField("price")
   private String price;
-  private String create_time;
-  private String drugs_number;
-  private String pat_statsus;
+ @TableField("create_time")
+  private String createTime;
+ @TableField("drugs_number")
+  private String drugsNumber;
+ @TableField("pat_statsus")
+  private String patStatsus;
+ @TableField("status")
   private String status;
+ @TableField("province")
   private String province;
+ @TableField("address")
   private String address;
+ @TableField("phone")
   private String phone;
 }

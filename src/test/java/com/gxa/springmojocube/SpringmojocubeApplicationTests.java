@@ -18,16 +18,16 @@ class SpringmojocubeApplicationTests {
   MyCache myCache;
   @Test
   void test1(){
-    myCache.put("1","1",10);
-    myCache.put("2","2",10);
+    myCache.put("1","1",20);
+    myCache.put("2","2",15);
     myCache.put("3","3",10);
-    myCache.put("4","4",10);
-    myCache.put("5","5",10);
-    myCache.put("6","6",10);
-    myCache.put("7","7",10);
-    myCache.put("8","8",10);
+    myCache.put("4","4",9);
+    myCache.put("5","5",7);
+    myCache.put("6","6",5);
+    myCache.put("7","7",3);
+    myCache.put("8","8",1);
     try {
-      Thread.sleep(10000);
+      Thread.sleep(100000);
       System.err.println("退出");
     } catch (InterruptedException e) {
       e.printStackTrace();

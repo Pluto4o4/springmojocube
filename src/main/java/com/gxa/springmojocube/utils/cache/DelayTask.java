@@ -17,17 +17,17 @@ public class DelayTask<T> implements Delayed {
    }
 
    public long getDelay(TimeUnit unit) {
-      return unit.convert(this.time - System.nanoTime(), TimeUnit.NANOSECONDS);
+      return unit.convert(this.time-System.currentTimeMillis()/1000, TimeUnit.SECONDS);
    }
 
    @Override
    public int compareTo(Delayed delayed) {
       // 过期时间长的放置在队列尾部
-      if (this.getDelay(TimeUnit.MICROSECONDS) > getDelay(TimeUnit.MICROSECONDS)) {
+      if (this.getDelay(TimeUnit.SECONDS) > getDelay(TimeUnit.SECONDS)) {
          return 1;
       }
       // 过期时间短的放置在队列头
-      if (this.getDelay(TimeUnit.MICROSECONDS) < getDelay(TimeUnit.MICROSECONDS)) {
+      if (this.getDelay(TimeUnit.SECONDS) < getDelay(TimeUnit.SECONDS)) {
          return -1;
       }
       return 0;

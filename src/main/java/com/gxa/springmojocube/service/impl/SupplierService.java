@@ -8,4 +8,5 @@ public interface SupplierService {
    Result deleteSupplier(String id);
    Result updateSupplier(Supplier supplier);
    Result selectPage(Integer pageNumber, Integer pageSize,String supplierName,String type,String status);
+   Result selectSupplierName(String supplierName);
 }

@@ -33,6 +33,7 @@ public class MyCache {
          try {
             // 从延时队列中获取任务,如果队列为空, take 方法将会阻塞在这里
             DelayTask<?> delayMessage = delayQueue.take();
+            System.err.println("获取任务"+delayMessage.getDelay(TimeUnit.SECONDS));
             Runnable task = (Runnable) delayMessage.getTask();
 
             if (null == task) {
@@ -62,12 +63,6 @@ public class MyCache {
       delayQueue.put(delayMessage);
    }
 
-   //删除任务
-   public boolean removeTask(Runnable task) {
-      return delayQueue.remove(task);
-   }
-
-
    static ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>();
 
    public void put(String k, Object v) {
@@ -90,7 +85,7 @@ public class MyCache {
          @Override
          public void run() {
             map.remove(k);
-            System.err.println("移除"+k);
+            System.err.println("移除"+k+System.currentTimeMillis());
          }
       }, timeout, v);
       map.put(k,delayMessage);

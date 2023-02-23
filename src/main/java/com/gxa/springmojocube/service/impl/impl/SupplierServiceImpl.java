@@ -57,5 +57,16 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
       return new Result().ok(list,size.toString());
    }
 
+   //模糊查询供应商
+   public Result selectSupplierName(String supplierName) {
+      List<Supplier> list= query()
+            .like(StringUtils.isNotBlank(supplierName), "supplier_name", supplierName)
+            .list();
+
+      Integer size=list.size();
+
+      return new Result().ok(list,size.toString());
+   }
+
 
 }

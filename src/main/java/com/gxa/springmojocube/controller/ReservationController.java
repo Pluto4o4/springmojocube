@@ -17,7 +17,7 @@ public class ReservationController {
   @Autowired private ReservationService reservationService;
 
   // 查找所有
-  @PostMapping("/reservation/query")
+  @GetMapping("/reservation/query")
   public Result queryAll() {
     List<Reservation> reservations = this.reservationService.queryAll();
 
@@ -25,7 +25,7 @@ public class ReservationController {
   }
 
   // 根据id删除
-  @GetMapping("/reservation/deletById")
+  @PostMapping("/reservation/deletById")
   public Result deletById(@RequestBody Reservation reservation) {
     this.reservationService.deleteById(reservation);
     return new Result().ok();
@@ -39,14 +39,14 @@ public class ReservationController {
   }
 
   // 批量删除
-  @GetMapping("/reservation/deleteByIds")
+  @PostMapping("/reservation/deleteByIds")
   public Result deleteByIds(@RequestBody String[] ids) {
     this.reservationService.deleteByIds(ids);
     return new Result().ok();
   }
 
   // 根据id获取信息
-  @PostMapping("/reservation/selectById")
+  @GetMapping("/reservation/selectById")
   public Result selectById(@RequestBody Reservation reservation) {
     Reservation newreservation = this.reservationService.selectById(reservation);
     return new Result().ok(newreservation);
@@ -73,7 +73,7 @@ public class ReservationController {
   }
 
   // 预约管理-根据id查询患者
-  @PostMapping("/reservation/selectByPatientId")
+  @GetMapping("/reservation/selectByPatientId")
   public Result selectByPatientId(@RequestBody Patient patient) {
     Patient newpatient = this.reservationService.selectByPatientId(patient);
     return new Result().ok(newpatient);

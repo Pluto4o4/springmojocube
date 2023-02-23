@@ -23,7 +23,7 @@ public class ReservationSetController {
   @Autowired private ReservationSetService reservationSetService;
 
   // 查找所有设置
-  @PostMapping("/reservationset/query")
+  @GetMapping("/reservationset/query")
   public Result queryAll() {
     List<AppointSet> reservations = this.reservationSetService.queryAll();
     System.out.println(reservations.toString());
@@ -31,7 +31,7 @@ public class ReservationSetController {
   }
 
   // 根据id删除
-  @GetMapping("/reservationset/deletById")
+  @PostMapping("/reservationset/deletById")
   public Result deletById(@RequestBody AppointSet appointSet) {
     this.reservationSetService.deleteById(appointSet);
     return new Result().ok();

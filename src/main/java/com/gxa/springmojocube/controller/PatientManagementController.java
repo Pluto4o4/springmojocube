@@ -30,7 +30,7 @@ public class PatientManagementController {
   }
 
   // 根据id删除
-  @GetMapping("/patientmanagerment/deletById")
+  @PostMapping("/patientmanagerment/deletById")
   public Result deletById(@RequestBody Patient Patient) {
     this.service.deleteById(Patient);
     return new Result().ok();
@@ -43,7 +43,7 @@ public class PatientManagementController {
     return new Result().ok();
   }
   // 根据id获取信息
-  @PostMapping("/patientmanagerment/selectById")
+  @GetMapping("/patientmanagerment/selectById")
   public Result selectById(@RequestBody Patient reservation) {
     Patient newreservation = this.service.selectById(reservation);
     return new Result().ok(newreservation);
@@ -60,7 +60,7 @@ public class PatientManagementController {
     return new Result().error();
   }
   // 高级搜索
-  @PostMapping("/patientmanagerment/searchById")
+  @GetMapping("/patientmanagerment/searchById")
   public Result search(Patient Patient) {
     List<Patient> res = this.service.search(Patient);
     return new Result().ok(res);

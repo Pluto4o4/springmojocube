@@ -7,7 +7,7 @@
 <!--    id,title,type,user_name,department,bed_number,pic,price,create_time,drugs_number,pay_status,status,province,address-->
 <!--  </sql>-->
   <sql id="patient">
-    id,user_name,user_sex,user_age,phone,identity,id_card,province,adress,user_appoint,create_time
+    id,user_name,user_sex,user_age,phone,identity,id_card,province,adress,user_appoint,create_time,day,status
   </sql>
 
   <select id="queryAll" resultType="patient">
@@ -25,7 +25,7 @@
 
   <insert id="add" parameterType="patient">
     insert into patient(<include refid="patient"/>) values
-    (#{id},#{title},#{type},#{user_name},#{department},#{bed_number},#{pic},#{price},#{create_time},#{drugs_number},#{pay_status},#{status},#{province},#{address});
+    (#{id},#{user_name},#{user_sex},#{user_age},#{phone},#{identity},#{id_car},#{provice},#{adress},#{user_appoint},#{create_time},#{day},#{status});
   </insert>
 
   <update id="deleteByIds" parameterType="java.lang.String">

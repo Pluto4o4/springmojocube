@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.springmojocube.mapper.ReservationSetMapper">
+<sql id="set">
+  id,user_appoint,department,occupation,appoint_time,surplus,status
+</sql>
+  <select id="queryAll" resultType="com.gxa.springmojocube.entity.AppointSet">
+    select
+    <include refid="set"/>
+    from appoint_set
+    where status = 1;
+  </select>
+
+  <update id="deleteById" parameterType="com.gxa.springmojocube.entity.AppointSet">
+    update appoint
+    set status=0
+    where id = #{id};
+  </update>
+
+  <insert id="add" parameterType="com.gxa.springmojocube.entity.AppointSet">
+    insert into appoint_set(<include refid="set"/>) values
+    (#{id},#{user_appoint},#{department},#{occupation},#{appoint_time},#{surplus},#{status});
+  </insert>
+
+  <select id="selectById" resultType="appointSet">
+    select
+    <include refid="set"/>
+    from appoint_set
+    where user_appoint=#{user_appoint};
+  </select>
+
+  <update id="updateById" parameterType="appointSet">
+    update appoint_set
+    <set>
+      <if test="user_appoint != null">user_appoint=#{user_appoint},</if>
+      <if test="department != null">department=#{department},</if>
+      <if test="occupation != null">occupation=#{occupation},</if>
+      <if test="appoint_time != null">appoint_time=#{appoint_time},</if>
+      <if test="surplus != null">surplus=#{surplus},</if>
+      <if test="status != null">status=#{status},</if>
+    </set>
+    where id=#{id};
+  </update>
+</mapper>

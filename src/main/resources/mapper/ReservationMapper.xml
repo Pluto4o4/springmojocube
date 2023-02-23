@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.springmojocube.mapper.ReservationMapper">
-  <resultMap id="reservationResultMap" type="reservation">
+  <resultMap id="reservationResultMap" type="com.gxa.springmojocube.entity.Reservation">
     <id property="id" column="id"></id>
     <result property="doctorName" column="doctor_name"></result>
     <result property="day" column="day"></result>

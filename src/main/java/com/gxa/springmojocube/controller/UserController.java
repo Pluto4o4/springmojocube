@@ -2,20 +2,12 @@ package com.gxa.springmojocube.controller;
 
 import com.gxa.springmojocube.entity.User;
 import com.gxa.springmojocube.service.impl.UserService;
-import com.gxa.springmojocube.utils.JwtUtils;
-import com.gxa.springmojocube.utils.MD5Util;
 import com.gxa.springmojocube.utils.Result;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户类
@@ -25,13 +17,15 @@ import javax.websocket.server.PathParam;
  * @since 2023/2/18 8:57
  */
 @RestController
+@RequestMapping("/user")
 public class UserController {
+  @Autowired
   private UserService userService;
 
-  @Autowired
-  private UserController(UserService userService) {
-    this.userService = userService;
-  }
+//  @Autowired
+//  private UserController(UserService userService) {
+//    this.userService = userService;
+//  }
 
   @ApiOperation(value = "登录接口")
   @ApiImplicitParams({
@@ -48,19 +42,22 @@ public class UserController {
         dataType = "String",
         required = true),
   })
-  @GetMapping("/user/login")
-  public Result login(@PathParam("name") String name,@PathParam("pwd") String pwd) {
-    // 加密
-    String newPwd = MD5Util.MD5(pwd);
-    User user = userService.login(name, newPwd);
-    if (user != null) {
-      Map map = new HashMap<>();
-      String token = JwtUtils.getJwtToken(user.getId() + "", user.getName());
-      map.put("token", token);
-      map.put("username", name);
-      return new Result().ok(map);
-    } else {
-      return new Result().error("用户名或密码不正确");
-    }
+  @PostMapping("/login")
+  public Result login(@RequestBody User user) {
+      return userService.login(user);
+  }
+
+  @PostMapping("/code")
+  public Result sendCode(@RequestParam(value = "email") String email){
+    return userService.sendCode(email);
+  }
+  @PostMapping("/logout")
+  public Result out(){
+    return userService.out();
+  }
+
+  @PostMapping("/logon")
+  public Result logon(@RequestBody User user){
+    return userService.logon(user);
   }
 }

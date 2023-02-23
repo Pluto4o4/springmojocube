@@ -10,4 +10,9 @@ class SpringmojocubeApplicationTests {
   void contextLoads() {
   }
 
+  @Test
+  void test1(){
+
+  }
+
 }

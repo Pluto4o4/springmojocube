@@ -28,7 +28,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
       list.add(HttpStatus.HTTP_UNAUTHORIZED);
       String json = JSON.toJSONString(result.error("请重新登入!(输入正确的账号或密码)"));
       try {
-         response.setStatus(200);
+         response.setStatus(401);
          response.setContentType("application/json");
          response.setCharacterEncoding("utf-8");
          response.getWriter().print(json);

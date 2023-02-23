@@ -21,7 +21,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
    UserMapper userMapper;
 
    @Resource
-   MyCache.MyCache myCache;
+   MyCache myCache;
    @Override
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       //获取数据库中的用户

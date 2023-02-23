@@ -12,7 +12,7 @@ public class DelayTask<T> implements Delayed {
    private T task;//任务
    private Object data;
 
-   public DelayTask(Long time, T task, Object data) {
+   public DelayTask(T task, Long time,Object data) {
       this.time = time+System.currentTimeMillis();
       this.task = task;
       this.data = data;

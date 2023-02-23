@@ -15,6 +15,7 @@ public class MyCache {
 
    private ExecutorService executor;
    private DelayQueue<DelayTask<?>> delayQueue;
+
    @PostConstruct
    @SuppressWarnings({"PMD.AvoidManuallyCreateThreadRule", "PMD.ThreadPoolCreationRule"})
    public void init() {
@@ -54,41 +55,60 @@ public class MyCache {
     */
    public void put(Runnable task, long time, TimeUnit unit) {
       // 获取延时时间
-      long timeout = TimeUnit.NANOSECONDS.convert(time, unit);
+      long timeout = TimeUnit.SECONDS.convert(time, unit);
       // 将任务封装成实现 Delayed 接口的消息体
-      DelayTask<? extends Runnable> delayMessage = new DelayTask<>(timeout, task,null);
+      DelayTask<? extends Runnable> delayMessage = new DelayTask<>(timeout, task, null);
       // 将消息体放到延时队列中
       delayQueue.put(delayMessage);
    }
 
-   /**
-    * 删除任务
-    */
+   //删除任务
    public boolean removeTask(Runnable task) {
       return delayQueue.remove(task);
    }
 
 
+   static ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>();
 
+   public void put(String k, Object v) {
+      map.put(k, v);
+      this.put(() -> map.remove(k), 10, TimeUnit.SECONDS);
+   }
 
-      static ConcurrentHashMap<String,Object> map=new ConcurrentHashMap<>();
-      public Object call() throws Exception {
-         return null;
-      }
-      public static void put(String k,Object v,Long times){
+   public void put(String k, Object v,long time) {
 
+      // 获取延时时间
+      long timeout = TimeUnit.SECONDS.convert(time, TimeUnit.SECONDS);
+      if(map.containsKey(k)){
+         DelayTask<? extends Runnable> delayTask=(DelayTask)map.get(k);
+         delayTask.setTime(timeout);
+         return;
+      }
 
-         map.put(k,v);
+      // 将任务封装成实现 Delayed 接口的消息体
+      DelayTask<? extends Runnable> delayMessage = new DelayTask<>(timeout, ()->map.remove(k), v);
+      map.put(k,delayMessage);
+      // 将消息体放到延时队列中
+      delayQueue.put(delayMessage);
+   }
+
+   public Object get(String k) {
+      return map.get(k);
+   }
+
+   public boolean containsKey(String k) {
+      return map.containsKey(k);
+   }
+
+   public boolean remove(String k) {
+      if(map.containsKey(k)){
+         DelayTask<? extends Runnable> delayTask=(DelayTask)map.get(k);
+         delayQueue.remove(delayTask);
+         map.remove(k);
+         return true;
       }
-      public static Object get(String k){
-         return map.get(k);+
-      }
-      public static boolean containsKey(String k){
-         return  map.containsKey(k);
-      }
-      public static void remove(String string){
-         map.remove(string);
-      }
+      return false;
+   }
 
 }
 

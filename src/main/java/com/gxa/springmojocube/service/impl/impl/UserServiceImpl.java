@@ -60,13 +60,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements U
   @Resource
   MailSenderUtil mailSenderUtil;
   @Resource
-  MyCache.MyCache myCache;
+  MyCache myCache;
   @Override
   public Result sendCode(String email) {
     result=new Result();
     String code= RandomUtil.randomNumbers(6);
     mailSenderUtil.sendEmailCode(code,"1782252415@qq.com",email);
-    myCache.put("email:"+email,code);
+    myCache.put("email:"+email,code,10);
     System.err.println(myCache.get("email:"+email));;
     return result.ok("验证码发送成功");
   }

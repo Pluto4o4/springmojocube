@@ -26,7 +26,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
       Result responseResult = result.ok(list);
       String json = JSON.toJSONString(responseResult);
       try {
-         response.setStatus(200);
+         response.setStatus(401);
          response.setContentType("application/json");
          response.setCharacterEncoding("utf-8");
          response.getWriter().print(json);

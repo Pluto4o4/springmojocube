@@ -56,7 +56,8 @@ public class ReservationController {
   // 根据id获取信息
   @GetMapping("/reservation/selectById")
   public Result selectById(@RequestParam(defaultValue = "1") Integer index,
-      @RequestParam(defaultValue = "10j") Integer size,
+      @RequestParam(defaultValue = "10") Integer size,
+      @RequestParam(required = false) String id,
       @RequestParam(required = false) String user_name,
       @RequestParam(required = false) String user_sex,
       @RequestParam(required = false) String user_age,
@@ -68,6 +69,7 @@ public class ReservationController {
       @RequestParam(required = false) String create_time,
       @RequestParam(required = false) String appoint_time) {
     Reservation reservation=new Reservation();
+    reservation.setId(id);
     reservation.setSize(String.valueOf(size));
     reservation.setIndex(String.valueOf(index));
     reservation.setUser_age(user_age);

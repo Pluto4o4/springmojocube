@@ -20,8 +20,9 @@
   </update>
 
   <insert id="add" parameterType="com.gxa.springmojocube.entity.AppointSet">
-    insert into appoint_set(<include refid="set"/>) values
-    (#{id},#{user_appoint},#{department},#{occupation},#{appoint_time},#{surplus},#{status});
+    insert into appoint_set(user_appoint,department,occupation,appoint_time,surplus,status)
+    values
+    (#{user_appoint},#{department},#{occupation},#{appoint_time},#{surplus},#{status});
   </insert>
 
   <select id="selectById" resultType="appointSet">

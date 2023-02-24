@@ -25,7 +25,6 @@ public class PatientManagementController {
   // 查找所有
   @GetMapping("/patientmanagerment/query")
   public Result queryAll() {
-    System.out.println("abc");
     List<Patient> reservations = this.service.queryAll();
 
     return new Result().ok(reservations);
@@ -33,8 +32,10 @@ public class PatientManagementController {
 
   // 根据id删除
   @PostMapping("/patientmanagerment/deletById")
-  public Result deletById(@RequestBody Patient Patient) {
-    this.service.deleteById(Patient);
+  public Result deletById(@RequestParam Integer id) {
+    Patient patient=new Patient();
+    patient.setId(String.valueOf(id));
+    this.service.deleteById(patient);
     return new Result().ok();
   }
 

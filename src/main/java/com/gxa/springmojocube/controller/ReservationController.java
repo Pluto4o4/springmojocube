@@ -34,7 +34,9 @@ public class ReservationController {
 
   // 根据id删除
   @PostMapping("/reservation/deletById")
-  public Result deletById(@RequestBody Reservation reservation) {
+  public Result deletById(@RequestParam Integer id) {
+    Reservation reservation=new Reservation();
+    reservation.setId(String.valueOf(id));
     this.reservationService.deleteById(reservation);
     return new Result().ok();
   }

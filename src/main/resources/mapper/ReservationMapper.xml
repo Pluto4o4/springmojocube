@@ -47,9 +47,8 @@
   </select>
 
   <update id="deleteById" parameterType="com.gxa.springmojocube.entity.Reservation">
-    update appoint
-    set status=0
-    where id = #{id};
+  delete from appoint
+   where id=#{id}
   </update>
 
   <insert id="add" parameterType="com.gxa.springmojocube.entity.Reservation">

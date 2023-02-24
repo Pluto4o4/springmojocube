@@ -18,16 +18,15 @@
   </select>
 
   <update id="deleteById" parameterType="patient">
-    update appoint
-    set status=0
-    where id = #{id};
+    delete from patient
+    where id=#{id}
   </update>
 
   <insert id="add" parameterType="patient">
     insert into patient(
     user_name,user_sex,user_age,phone,identity,id_card,province,adress,user_appoint,create_time,day,status
     ) values
-    (#{user_name},#{user_sex},#{user_age},#{phone},#{identity},#{id_car},#{provice},#{adress},#{user_appoint},#{create_time},#{day},#{status});
+    (#{user_name},#{user_sex},#{user_age},#{phone},#{identity},#{id_card},#{province},#{adress},#{user_appoint},#{create_time},#{day},#{status});
   </insert>
 
   <update id="deleteByIds" parameterType="java.lang.String">

@@ -34,7 +34,9 @@ public class ReservationSetController {
 
   // 根据id删除
   @PostMapping("/reservationset/deletById")
-  public Result deletById(@RequestBody AppointSet appointSet) {
+  public Result deletById(@RequestParam Integer id) {
+    AppointSet appointSet=new AppointSet();
+    appointSet.setId(String.valueOf(id));
     this.reservationSetService.deleteById(appointSet);
     return new Result().ok();
   }

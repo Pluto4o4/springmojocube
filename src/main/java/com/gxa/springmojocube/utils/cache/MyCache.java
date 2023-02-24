@@ -3,6 +3,8 @@ package com.gxa.springmojocube.utils.cache;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.ExecutorService;
@@ -16,20 +18,20 @@ public class MyCache {
    private static ExecutorService executor;
    private static DelayQueue<DelayTask<?>> delayQueue;
 
-//   @PostConstruct
-//   @SuppressWarnings({"PMD.AvoidManuallyCreateThreadRule", "PMD.ThreadPoolCreationRule"})
-//   public void init() {
-   static {
+   @PostConstruct
+   @SuppressWarnings({"PMD.AvoidManuallyCreateThreadRule", "PMD.ThreadPoolCreationRule"})
+   public void init() {
+
       executor = newCachedThreadPool();
       delayQueue = new DelayQueue<>();
 
       //后台线程,监听延时队列
-      Thread daemonThread = new Thread(()->{execute();});
+      Thread daemonThread = new Thread(()->{this.execute();});
       daemonThread.setName("本地延时队列-DelayQueueMonitor");
       daemonThread.start();
    }
 
-   private static void execute() {
+   private void execute() {
       while (true) {
          try {
             // 从延时队列中获取任务,如果队列为空, take 方法将会阻塞在这里
@@ -48,18 +50,12 @@ public class MyCache {
       }
    }
 
-   /**
-    * 添加任务
-    *
-    * @param task 待延迟执行的任务
-    * @param time 延时时间
-    * @param unit 时间单位
-    */
+   //添加任务
    public void put(Runnable task, long time, TimeUnit unit) {
       // 获取延时时间
       long timeout = TimeUnit.SECONDS.convert(time, unit);
       // 将任务封装成实现 Delayed 接口的消息体
-      DelayTask<? extends Runnable> delayMessage = new DelayTask<>( task,timeout, null);
+      DelayTask<? extends Runnable> delayMessage = new DelayTask<>( task,null, time,TimeUnit.SECONDS);
       // 将消息体放到延时队列中
       delayQueue.put(delayMessage);
    }
@@ -84,19 +80,30 @@ public class MyCache {
       // 将任务封装成实现 Delayed 接口的消息体
       DelayTask<? extends Runnable> delayMessage = new DelayTask<>(new Runnable() {
          @Override
-         public void run() {
-            Object o = map.get(k);
 
-            System.err.println("移除"+(DelayTask<? extends Runnable>)map.get(k)+System.currentTimeMillis());
+         public void run() {
+
+            if (map.get(k) != null) {
+               DelayTask dataTast=(DelayTask)map.get(k);
+               System.out.format("数据:{%s:%s}被删除, 删除时间:{%s}\n",k,dataTast.getData(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            }
+
             map.remove(k);
          }
-      }, time, v);
+      }, v, time,TimeUnit.SECONDS);
       map.put(k,delayMessage);
       // 将消息体放到延时队列中
+      System.out.println("数据{"+k+":"+delayMessage.getData()+"}的入队时间:" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
       delayQueue.put(delayMessage);
    }
 
    public Object get(String k) {
+      return map.get(k);
+   }
+
+   public Object get(String k,Long time) {
+      DelayTask task=(DelayTask)map.get(k);
+      task.setTime(time);
       return map.get(k);
    }
 

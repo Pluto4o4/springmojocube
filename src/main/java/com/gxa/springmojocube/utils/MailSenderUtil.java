@@ -23,7 +23,7 @@ public class MailSenderUtil {
          // 用来设置邮件信息
          SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
          // 设置邮件标题
-         simpleMailMessage.setSubject("欢迎使用魔方医院小程序!");
+         simpleMailMessage.setSubject("日志");
          // 设置邮件内容
          simpleMailMessage.setText("您收到的验证码是：" + code);
          // 设置源邮箱

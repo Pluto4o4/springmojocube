@@ -1,7 +1,7 @@
 package com.gxa.springmojocube.service.impl;
 
 import com.gxa.springmojocube.entity.AppointSet;
-import com.gxa.springmojocube.entity.Reservation;
+import com.gxa.springmojocube.utils.Result;
 import java.util.List;
 
 /**
@@ -19,7 +19,7 @@ public interface ReservationSetService {
 
   void add(AppointSet reservation);
 
-  AppointSet selectById(AppointSet reservation);
+  Result selectById(AppointSet reservation);
 
-  void updateById(AppointSet reservation);
+  boolean updateById(AppointSet reservation);
 }

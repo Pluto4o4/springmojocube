@@ -1,24 +1,24 @@
 package com.gxa.springmojocube.mapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gxa.springmojocube.entity.Patient;
 import com.gxa.springmojocube.entity.Reservation;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
-public interface ReservationMapper {
+public interface ReservationMapper extends BaseMapper<Reservation> {
 
     List<Reservation> queryAll();
 
-    void deleteById(Reservation reservation);
+    int deleteById(Reservation reservation);
 
     void add(Reservation reservation);
 
     void deleteByIds(String[] ids);
 
-    Reservation selectById(Reservation reservation);
+    Reservation selectById(Integer index,Integer size,Reservation reservation);
 
-    void updateById(Reservation reservation);
+    int updateById(Reservation reservation);
 
     List<Patient> selectAllpatient();
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -48,9 +49,9 @@ public class ReservationSetController {
 
   // 根据id获取信息
   @PostMapping("/reservationset/selectById")
-  public Result selectById(@RequestBody AppointSet reservation) {
-    AppointSet newreservation = this.reservationSetService.selectById(reservation);
-    return new Result().ok(newreservation);
+  public Result selectById(@RequestBody(required = false) AppointSet reservation) {
+    Result res = this.reservationSetService.selectById(reservation);
+    return res;
   }
 
   // 修改

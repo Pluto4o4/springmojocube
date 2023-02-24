@@ -1,19 +1,19 @@
 package com.gxa.springmojocube.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gxa.springmojocube.entity.Patient;
 import java.util.List;
 
-public interface PatientManagermentMapper {
+public interface PatientManagermentMapper extends BaseMapper<Patient> {
 
   List<Patient> queryAll();
 
-  void deleteById(Patient Patient);
+  int deleteById(Patient Patient);
 
   void add(Patient reservation);
 
   Patient selectById(Patient reservation);
 
-  void updateById(Patient reservation);
+  int updateById(Patient reservation);
 
-  List<Patient> search(Patient Patient);
 }

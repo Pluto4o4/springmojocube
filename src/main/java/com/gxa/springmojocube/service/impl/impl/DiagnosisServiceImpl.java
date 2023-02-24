@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gxa.springmojocube.entity.Diagnosis;
+import com.gxa.springmojocube.entity.Drug;
 import com.gxa.springmojocube.entity.Dto.DiagnosisTableDto;
 import com.gxa.springmojocube.entity.Qo.DiagnosisListQo;
 import com.gxa.springmojocube.entity.Qo.DiagnosisQo;
 import com.gxa.springmojocube.entity.Qo.PageQo;
 import com.gxa.springmojocube.mapper.DiagnosisMapper;
+import com.gxa.springmojocube.mapper.DrugMapper;
 import com.gxa.springmojocube.service.impl.DiagnosisService;
 import com.gxa.springmojocube.utils.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +33,9 @@ import java.util.Objects;
 public class DiagnosisServiceImpl implements DiagnosisService {
     @Autowired
     private DiagnosisMapper diagnosisMapper;
+
+    @Autowired
+    private DrugMapper drugMapper;
 
     @Override
     public Result<List<Diagnosis>> diagnosisList(DiagnosisListQo qo) {
@@ -113,11 +119,20 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         //取消总数
         String num3 = diagnosisMapper.GetCancelCount();
         log.info("应收金额{}",num3);
+        //药品总数
+        QueryWrapper<Drug> drugQw = new QueryWrapper<>();
+        drugQw.select("drug_name");
+        List<Drug> drugs = drugMapper.selectList(drugQw);
+        List<String> drugsName = new ArrayList<>();
+        drugs.stream().forEach(drug -> {
+            drugsName.add(drug.getDrugName());
+        });
         DiagnosisTableDto diagnosisTableDto = new DiagnosisTableDto();
         diagnosisTableDto.setTotel(String.valueOf(count));
         diagnosisTableDto.setCancelCount(num3);
         diagnosisTableDto.setAmountReceived(num2);
         diagnosisTableDto.setAmountReceivable(num1);
+        diagnosisTableDto.setDrugs(drugsName);
         return new Result().ok(diagnosisTableDto);
     }
 

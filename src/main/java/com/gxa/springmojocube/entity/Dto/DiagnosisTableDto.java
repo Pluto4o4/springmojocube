@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author JiaFengYi
  * @date 2023/02/23/23:33
@@ -17,4 +19,5 @@ public class DiagnosisTableDto {
     private String amountReceivable;
     private String AmountReceived;
     private String cancelCount;
+    private List<String> drugs;
 }

@@ -9,8 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 预约管理
+ *
+ * @author Mr.Xu/Pluto404
+ * @since 8:31 2023/2/24
+ * @version V1.0
+ */
 @RestController
 public class ReservationController {
 
@@ -47,9 +55,9 @@ public class ReservationController {
 
   // 根据id获取信息
   @GetMapping("/reservation/selectById")
-  public Result selectById(@RequestBody Reservation reservation) {
-    Reservation newreservation = this.reservationService.selectById(reservation);
-    return new Result().ok(newreservation);
+  public Result selectById(@RequestBody(required = false) Reservation reservation) {
+    Result result = this.reservationService.selectById(reservation);
+    return result;
   }
 
   // 修改

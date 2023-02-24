@@ -1,5 +1,7 @@
 package com.gxa.springmojocube.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -11,6 +13,9 @@ import lombok.Data;
  */
 @Data
 public class AppointSet {
+
+
+  @TableId(value = "id", type = IdType.AUTO)
   private String id;
   private String user_appoint;
   private String department;
@@ -18,4 +23,6 @@ public class AppointSet {
   private String appoint_time;
   private String surplus;
   private String status;
+  private String index;
+  private String size;
 }

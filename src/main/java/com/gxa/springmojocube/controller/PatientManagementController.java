@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -44,9 +45,9 @@ public class PatientManagementController {
   }
   // 根据id获取信息
   @GetMapping("/patientmanagerment/selectById")
-  public Result selectById(@RequestBody Patient reservation) {
-    Patient newreservation = this.service.selectById(reservation);
-    return new Result().ok(newreservation);
+  public Result selectById(@RequestBody(required = false) Patient reservation) {
+    Result res= this.service.selectById(reservation);
+    return res;
   }
   // 修改
   @PostMapping("/patientmanagerment/updateById")
@@ -60,9 +61,9 @@ public class PatientManagementController {
     return new Result().error();
   }
   // 高级搜索
-  @GetMapping("/patientmanagerment/searchById")
-  public Result search(Patient Patient) {
-    List<Patient> res = this.service.search(Patient);
-    return new Result().ok(res);
-  }
+//  @GetMapping("/patientmanagerment/searchById")
+//  public Result search(Patient Patient) {
+//    List<Patient> res = this.service.search(Patient);
+//    return new Result().ok(res);
+//  }
 }

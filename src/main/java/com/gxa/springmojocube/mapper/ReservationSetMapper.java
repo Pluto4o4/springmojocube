@@ -1,18 +1,18 @@
 package com.gxa.springmojocube.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gxa.springmojocube.entity.AppointSet;
-import com.gxa.springmojocube.entity.Reservation;
 import java.util.List;
 
-public interface ReservationSetMapper {
+public interface ReservationSetMapper extends BaseMapper<AppointSet> {
 
   List<AppointSet> queryAll();
 
-  void deleteById(AppointSet appointSet);
+  int deleteById(AppointSet appointSet);
 
   void add(AppointSet reservation);
 
   AppointSet selectById(AppointSet reservation);
 
-  void updateById(AppointSet reservation);
+  int updateById(AppointSet reservation);
 }

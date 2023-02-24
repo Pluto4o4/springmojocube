@@ -1,6 +1,7 @@
 package com.gxa.springmojocube.service.impl;
 
 import com.gxa.springmojocube.entity.Patient;
+import com.gxa.springmojocube.utils.Result;
 import java.util.List;
 
 public interface PatientManagermentService {
@@ -11,9 +12,8 @@ public interface PatientManagermentService {
 
   void add(Patient reservation);
 
-  Patient selectById(Patient reservation);
+  Result selectById(Patient reservation);
 
-  void updateById(Patient reservation);
+  boolean updateById(Patient reservation);
 
-  List<Patient> search(Patient Patient);
 }

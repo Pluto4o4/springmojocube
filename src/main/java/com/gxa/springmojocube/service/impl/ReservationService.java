@@ -3,6 +3,7 @@ package com.gxa.springmojocube.service.impl;
 
 import com.gxa.springmojocube.entity.Patient;
 import com.gxa.springmojocube.entity.Reservation;
+import com.gxa.springmojocube.utils.Result;
 import java.util.List;
 
 public interface ReservationService {
@@ -13,9 +14,9 @@ public interface ReservationService {
 
     void deleteByIds(String[] ids);
 
-    Reservation selectById(Reservation reservation);
+    Result selectById(Reservation reservation);
 
-    void updateById(Reservation reservation);
+    boolean updateById(Reservation reservation);
 
     List<Patient> selectAllpatient();
 

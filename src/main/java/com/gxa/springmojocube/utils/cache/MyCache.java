@@ -67,7 +67,7 @@ public class MyCache {
 
    public void put(String k, Object v) {
       map.put(k, v);
-      this.put(() -> map.remove(k), 10, TimeUnit.SECONDS);
+      this.put(() -> map.remove(k), 24*60*60, TimeUnit.SECONDS);
    }
 
    public void put(String k, Object v,long time) {

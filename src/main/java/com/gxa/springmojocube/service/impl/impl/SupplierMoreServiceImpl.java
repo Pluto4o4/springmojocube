@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class SupplierMoreServiceImpl extends ServiceImpl<SupplierMoreMapper, SupplierMore> implements SupplierMoreService {
@@ -47,8 +48,9 @@ public class SupplierMoreServiceImpl extends ServiceImpl<SupplierMoreMapper, Sup
 
    @Override
    public Result getPage(Integer index, Integer size, String title, String phone, String contact, String status, String pic) {
+      List<SupplierMore> list;
       try {
-         query()
+         list= (List<SupplierMore>) query()
                .like(StringUtils.isNotBlank(title),"title",title)
                .eq(StringUtils.isNotBlank(phone),"phone",phone)
                .eq(StringUtils.isNotBlank(contact),"contact",contact)
@@ -59,7 +61,7 @@ public class SupplierMoreServiceImpl extends ServiceImpl<SupplierMoreMapper, Sup
          e.printStackTrace();
          return new Result().error("查询失败");
       }
-      return new Result().ok("查询成功");
+      return new Result().ok(list,((Integer)list.size()).toString());
    }
 
    @Override

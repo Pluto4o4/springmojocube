@@ -1,6 +1,7 @@
 package com.gxa.springmojocube.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -29,6 +30,8 @@ public class Patient {
   private String create_time;
   private String day;
   private String status;
+  @TableField(exist = false)
   private String index;
+  @TableField(exist = false)
   private String size;
 }

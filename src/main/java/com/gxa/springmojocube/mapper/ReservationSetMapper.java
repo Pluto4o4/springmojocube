@@ -12,7 +12,7 @@ public interface ReservationSetMapper extends BaseMapper<AppointSet> {
 
   void add(AppointSet reservation);
 
-  AppointSet selectById(AppointSet reservation);
+  //AppointSet selectById(AppointSet reservation);
 
   int updateById(AppointSet reservation);
 }

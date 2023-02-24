@@ -42,12 +42,6 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
 
   @Override
   public Result selectById(Reservation reservation) {
-    if(reservation.getIndex()==""||reservation.getIndex()==null){
-      reservation.setIndex("1");
-    }
-    if(reservation.getSize()==""||reservation.getSize()==null){
-      reservation.setSize("10");
-    }
     Integer pageNumber= Integer.valueOf(reservation.getIndex());
     Integer pageSize= Integer.valueOf(reservation.getSize());
     Page<Reservation> page =

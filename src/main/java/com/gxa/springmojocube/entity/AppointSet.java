@@ -3,6 +3,7 @@ package com.gxa.springmojocube.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -15,17 +16,28 @@ import lombok.Data;
 @Data
 public class AppointSet {
 
-
-  @TableId(value = "id", type = IdType.AUTO)
   private String id;
   private String user_appoint;
+  private String userAppoint;
+
   private String department;
   private String occupation;
+
   private String appoint_time;
+  private String appointTime;
+
   private String surplus;
   private String status;
   @TableField(exist = false)
   private String index;
   @TableField(exist = false)
   private String size;
+
+  public void setUserAppoint(String userAppoint) {
+    this.user_appoint = userAppoint;
+  }
+
+  public void setAppointTime(String appointTime) {
+    this.appoint_time = appointTime;
+  }
 }

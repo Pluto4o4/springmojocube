@@ -56,10 +56,7 @@ private ReservationSetMapper reservationSetMapper;
             .eq(StringUtils.isNotBlank(reservation.getUser_appoint()), "user_appoint", reservation.getUser_appoint())
             .eq(StringUtils.isNotBlank(reservation.getStatus()), "status", reservation.getStatus())
             .eq(StringUtils.isNotBlank(reservation.getOccupation()), "occupation", reservation.getOccupation())
-            .eq(
-                StringUtils.isNotBlank(reservation.getUser_appoint()),
-                "user_appoint",
-                reservation.getUser_appoint())
+            .eq(StringUtils.isNotBlank(reservation.getSurplus()), "surplus", reservation.getSurplus())
             .eq(
                 StringUtils.isNotBlank(reservation.getDepartment()),
                 "department",
@@ -75,12 +72,9 @@ private ReservationSetMapper reservationSetMapper;
     query()
         .eq(StringUtils.isNotBlank(reservation.getId()), "id", reservation.getId())
         .eq(StringUtils.isNotBlank(reservation.getUser_appoint()), "user_appoint", reservation.getUser_appoint())
+        .eq(StringUtils.isNotBlank(reservation.getSurplus()), "surplus", reservation.getSurplus())
         .eq(StringUtils.isNotBlank(reservation.getStatus()), "status", reservation.getStatus())
         .eq(StringUtils.isNotBlank(reservation.getOccupation()), "occupation", reservation.getOccupation())
-        .eq(
-            StringUtils.isNotBlank(reservation.getUser_appoint()),
-            "user_appoint",
-            reservation.getUser_appoint())
         .eq(
             StringUtils.isNotBlank(reservation.getDepartment()),
             "department",

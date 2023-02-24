@@ -83,6 +83,7 @@ public class ReservationController {
     reservation.setCreate_time(create_time);
     reservation.setAppoint_time(appoint_time);
     Result result = this.reservationService.selectById(reservation);
+    System.out.println(result);
     return result;
   }
 

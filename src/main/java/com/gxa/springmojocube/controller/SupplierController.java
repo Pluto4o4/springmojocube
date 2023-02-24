@@ -43,4 +43,5 @@ public class SupplierController {
    public Result selectSupplierName(@RequestParam(required = false) String supplierName){
       return supplierService.selectSupplierName(supplierName);
    }
+
 }

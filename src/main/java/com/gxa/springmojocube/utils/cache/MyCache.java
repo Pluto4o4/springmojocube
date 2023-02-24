@@ -13,27 +13,28 @@ import static java.util.concurrent.Executors.newCachedThreadPool;
 @Component
 public class MyCache {
 
-   private ExecutorService executor;
-   private DelayQueue<DelayTask<?>> delayQueue;
+   private static ExecutorService executor;
+   private static DelayQueue<DelayTask<?>> delayQueue;
 
-   @PostConstruct
-   @SuppressWarnings({"PMD.AvoidManuallyCreateThreadRule", "PMD.ThreadPoolCreationRule"})
-   public void init() {
+//   @PostConstruct
+//   @SuppressWarnings({"PMD.AvoidManuallyCreateThreadRule", "PMD.ThreadPoolCreationRule"})
+//   public void init() {
+   static {
       executor = newCachedThreadPool();
       delayQueue = new DelayQueue<>();
 
       //后台线程,监听延时队列
-      Thread daemonThread = new Thread(this::execute);
+      Thread daemonThread = new Thread(()->{execute();});
       daemonThread.setName("本地延时队列-DelayQueueMonitor");
       daemonThread.start();
    }
 
-   private void execute() {
+   private static void execute() {
       while (true) {
          try {
             // 从延时队列中获取任务,如果队列为空, take 方法将会阻塞在这里
             DelayTask<?> delayMessage = delayQueue.take();
-            System.err.println("获取任务"+delayMessage.getDelay(TimeUnit.SECONDS));
+//            System.err.println("获取任务"+delayMessage.getDelay();
             Runnable task = (Runnable) delayMessage.getTask();
 
             if (null == task) {
@@ -67,16 +68,16 @@ public class MyCache {
 
    public void put(String k, Object v) {
       map.put(k, v);
-      this.put(() -> map.remove(k), 1000000, TimeUnit.SECONDS);
+      this.put(() -> map.remove(k), 1000, TimeUnit.SECONDS);
    }
 
    public void put(String k, Object v,long time) {
 
       // 获取延时时间
-      long timeout = TimeUnit.SECONDS.convert(time, TimeUnit.SECONDS);
+//      long timeout = TimeUnit.SECONDS.convert(time, TimeUnit.SECONDS);
       if(map.containsKey(k)){
          DelayTask<? extends Runnable> delayTask=(DelayTask)map.get(k);
-         delayTask.setTime(timeout);
+         delayTask.setTime(time);
          return;
       }
 
@@ -84,10 +85,12 @@ public class MyCache {
       DelayTask<? extends Runnable> delayMessage = new DelayTask<>(new Runnable() {
          @Override
          public void run() {
+            Object o = map.get(k);
+
+            System.err.println("移除"+(DelayTask<? extends Runnable>)map.get(k)+System.currentTimeMillis());
             map.remove(k);
-            System.err.println("移除"+k+System.currentTimeMillis());
          }
-      }, timeout, v);
+      }, time, v);
       map.put(k,delayMessage);
       // 将消息体放到延时队列中
       delayQueue.put(delayMessage);

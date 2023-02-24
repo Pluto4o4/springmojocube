@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SupplierMoreServiceImpl extends ServiceImpl<SupplierMoreMapper, SupplierMore> implements SupplierMoreService {
@@ -37,6 +38,7 @@ public class SupplierMoreServiceImpl extends ServiceImpl<SupplierMoreMapper, Sup
       try {
          SupplierMore supplierMore = query().eq("id", id).one();
          supplierMoreMapper.deleteById(supplierMore);
+         if(Objects.isNull(supplierMore))return new Result().error("用户不存在");
       } catch (Exception e) {
          e.printStackTrace();
          return new Result().error("用户不存在");
@@ -48,20 +50,20 @@ public class SupplierMoreServiceImpl extends ServiceImpl<SupplierMoreMapper, Sup
 
    @Override
    public Result getPage(Integer index, Integer size, String title, String phone, String contact, String status, String pic) {
-      List<SupplierMore> list;
+      Page<SupplierMore> page=null;
       try {
-         list= (List<SupplierMore>) query()
-               .like(StringUtils.isNotBlank(title),"title",title)
-               .eq(StringUtils.isNotBlank(phone),"phone",phone)
-               .eq(StringUtils.isNotBlank(contact),"contact",contact)
-               .eq(StringUtils.isNotBlank(status),"status",status)
-               .eq(StringUtils.isNotBlank(pic),"pic",pic)
-               .page(new Page<>(index,size));
+         page = query()
+               .like(StringUtils.isNotBlank(title), "title", title)
+               .eq(StringUtils.isNotBlank(phone), "phone", phone)
+               .eq(StringUtils.isNotBlank(contact), "contact", contact)
+               .eq(StringUtils.isNotBlank(status), "status", status)
+               .eq(StringUtils.isNotBlank(pic), "pic", pic)
+               .page(new Page<>(index, size));
       } catch (Exception e) {
          e.printStackTrace();
          return new Result().error("查询失败");
       }
-      return new Result().ok(list,((Integer)list.size()).toString());
+      return new Result().ok(page.getRecords(),((Integer)page.getRecords().size()).toString());
    }
 
    @Override

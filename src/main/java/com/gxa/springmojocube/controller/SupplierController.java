@@ -38,4 +38,9 @@ public class SupplierController {
                       @RequestParam(required = false) String status){
       return supplierService.selectPage(index,size,supplierName,type,status);
    }
+
+   @GetMapping("/selectBySupplierName")
+   public Result selectSupplierName(@RequestParam(required = false) String supplierName){
+      return supplierService.selectSupplierName(supplierName);
+   }
 }

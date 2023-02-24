@@ -11,13 +11,13 @@ public class DelayTask<T> implements Delayed {
    private Object data;
 
    public DelayTask(T task, Long time,Object data) {
-      this.time = time+System.currentTimeMillis();
+      this.time = time;
       this.task = task;
       this.data = data;
    }
 
    public long getDelay(TimeUnit unit) {
-      return unit.convert(this.time-System.currentTimeMillis()/1000, TimeUnit.SECONDS);
+      return unit.convert(this.time, TimeUnit.SECONDS);
    }
 
    @Override

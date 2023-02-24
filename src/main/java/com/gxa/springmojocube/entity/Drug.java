@@ -1,6 +1,7 @@
 package com.gxa.springmojocube.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.models.auth.In;
@@ -18,4 +19,10 @@ public class Drug {
    private String pic;
    private String supplierName;
    private Integer status;
+   private String createTime;
+
+   @TableField(exist = false)
+   private String index;
+   @TableField(exist = false)
+   private String size;
 }

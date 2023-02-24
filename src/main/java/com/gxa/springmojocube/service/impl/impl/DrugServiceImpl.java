@@ -8,6 +8,7 @@ import com.gxa.springmojocube.service.impl.DrugService;
 import com.gxa.springmojocube.utils.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,17 +24,17 @@ public class DrugServiceImpl extends ServiceImpl<DrugMapper, Drug> implements Dr
    }
 
    //分页查询
-   public Result selectPage(Integer index,Integer size,String supplierName,String status){
+   public Result selectPage(Integer index,Integer size,String drugName,String status){
       result=new Result();
       Page<Drug> page=query()
-            .eq(StringUtils.isNotBlank(supplierName),"supplier_name",supplierName)
+            .like(StringUtils.isNotBlank(drugName),"drug_name",drugName)
             .eq(StringUtils.isNotBlank(status),"status",status)
             .page(new Page<>(index,size));
 
       List<Drug> list = page.getRecords();
 
       Long size1 = query()
-            .eq(StringUtils.isNotBlank(supplierName), "supplier_name", supplierName)
+            .eq(StringUtils.isNotBlank(drugName), "supplier_name", drugName)
             .eq(StringUtils.isNotBlank(status), "status", status)
             .count();
 
@@ -55,6 +56,17 @@ public class DrugServiceImpl extends ServiceImpl<DrugMapper, Drug> implements Dr
       result=new Result();
       boolean yes = updateById(drug);
       if(yes)return result.ok();
+
       return result.error();
+   }
+
+   @Override
+   public Result selectDrugName(String drugName) {
+      result=new Result();
+      List<Drug> list = query()
+            .like(StringUtils.isNotBlank(drugName), "drug_name", drugName)
+            .list();
+      Integer size=list.size();
+      return result.ok(list,size.toString());
    }
 }

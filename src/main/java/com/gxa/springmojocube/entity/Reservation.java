@@ -2,6 +2,7 @@ package com.gxa.springmojocube.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -12,6 +13,7 @@ import lombok.Data;
  * @version V1.0
  */
 @Data
+@TableName("appoint")
 public class Reservation {
 
   @TableId(value = "id", type = IdType.AUTO)

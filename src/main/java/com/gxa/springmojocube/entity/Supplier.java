@@ -1,6 +1,7 @@
 package com.gxa.springmojocube.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.models.auth.In;
 import lombok.Data;
@@ -17,4 +18,10 @@ public class Supplier {
    private String address;
    private String contacts;
    private String productNumber;
+   private String createTime;
+
+   @TableField(exist = false)
+   private String index;
+   @TableField(exist = false)
+   private String size;
 }

@@ -17,6 +17,8 @@ public class DrugController {
    public Result addDrug(@RequestBody Drug drug){
       return drugService.addDrug(drug);
    }
+
+
    @PostMapping("/delete")
    public Result deleteDrug(@RequestParam String id){
       return drugService.deleteDrug(id);
@@ -25,13 +27,18 @@ public class DrugController {
    @GetMapping("/page")
    public Result selectPage(@RequestParam(defaultValue = "1") Integer index,
                             @RequestParam(defaultValue = "10") Integer size,
-                            @RequestParam(required = false) String supplierName,
+                            @RequestParam(required = false) String drugName,
                             @RequestParam(required = false) String status){
-      return drugService.selectPage(index,size,supplierName,status);
+      return drugService.selectPage(index,size,drugName,status);
    }
 
    @PostMapping("/update")
-   public Result updateDrug(Drug drug){
+   public Result updateDrug(@RequestBody Drug drug){
       return drugService.updateDrug(drug);
+   }
+
+   @GetMapping("/selectByDrugName")
+   public Result selectDrugName(@RequestParam(required = false) String drugName){
+      return drugService.selectDrugName(drugName);
    }
 }

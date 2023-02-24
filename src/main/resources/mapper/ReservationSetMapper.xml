@@ -14,7 +14,7 @@
   </select>
 
   <update id="deleteById" parameterType="com.gxa.springmojocube.entity.AppointSet">
-    delete from patient
+    delete from appoint_set
     where id=#{id}
   </update>
 

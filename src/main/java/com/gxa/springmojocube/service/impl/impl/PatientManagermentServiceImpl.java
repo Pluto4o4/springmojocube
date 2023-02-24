@@ -124,7 +124,7 @@ public class PatientManagermentServiceImpl extends ServiceImpl<PatientManagermen
             reservation.getDay())
         .eq(
             StringUtils.isNotBlank(reservation.getStatus()),
-            "day",
+            "status",
             reservation.getDay())
         .count();
     return new Result().ok(list, size1.toString());

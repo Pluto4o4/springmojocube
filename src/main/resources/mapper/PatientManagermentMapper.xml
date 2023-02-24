@@ -55,7 +55,7 @@
       <if test="identity != null">identity=#{identity},</if>
       <if test="id_card != null">id_card=#{id_card},</if>
       <if test="province != null">province=#{province},</if>
-      <if test="address != null">address=#{address},</if>
+      <if test="adress != null">adress=#{adress},</if>
       <if test="user_appoint != null">user_appoint=#{user_appoint},</if>
       <if test="create_time != null">create_time=#{create_time},</if>
       <if test="day != null">day=#{day},</if>

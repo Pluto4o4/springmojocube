@@ -3,7 +3,6 @@ package com.gxa.springmojocube.utils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 
@@ -30,7 +29,8 @@ public class Result<T> implements Serializable {
     @ApiModelProperty(value = "数据量")
     private String count;
 
-    public Result<T> ok(T data) {
+
+   public Result<T> ok(T data) {
         this.setData(data);
         return this;
     }

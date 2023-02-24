@@ -49,7 +49,7 @@ public class SecurityConfig {
             .anonymous()
             //没有token能访问, 有token必须验证
             .antMatchers("/supplier/*","/drug/*","/patientmanagerment/*","/diagnosis/*",
-                  "/reservation/*","/reservationset/*")
+                  "/reservation/*","/reservationset/*","/supplierMore/*")
             .permitAll()
             // 除上面外的所有请求全部需要鉴权认证
             .anyRequest()

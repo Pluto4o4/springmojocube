@@ -77,6 +77,8 @@ public class PatientManagementController {
     patient.setCreate_time(create_time);
     patient.setDay(day);
     patient.setStatus(status);
+    patient.setIndex(String.valueOf(index));
+    patient.setSize(String.valueOf(size));
     Result res= this.service.selectById(patient);
     return res;
   }

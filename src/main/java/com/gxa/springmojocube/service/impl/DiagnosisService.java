@@ -1,6 +1,7 @@
 package com.gxa.springmojocube.service.impl;
 
 import com.gxa.springmojocube.entity.Diagnosis;
+import com.gxa.springmojocube.entity.DiagnosisExcel;
 import com.gxa.springmojocube.entity.Qo.DiagnosisListQo;
 import com.gxa.springmojocube.entity.Qo.DiagnosisQo;
 import com.gxa.springmojocube.entity.Qo.PageQo;
@@ -20,5 +21,7 @@ public interface DiagnosisService {
     Result update(DiagnosisQo diagnosisQo);
 
     Result diagnosisInfo();
+
+    List<DiagnosisExcel> putOutExcel();
 
 }

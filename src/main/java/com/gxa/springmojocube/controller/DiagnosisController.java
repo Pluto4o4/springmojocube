@@ -3,6 +3,7 @@ package com.gxa.springmojocube.controller;
 import com.gxa.springmojocube.entity.Qo.DiagnosisListQo;
 import com.gxa.springmojocube.entity.Qo.DiagnosisQo;
 import com.gxa.springmojocube.service.impl.DiagnosisService;
+import com.gxa.springmojocube.utils.DiagnosisExcelUtils;
 import com.gxa.springmojocube.utils.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 public class DiagnosisController {
     @Autowired
     private DiagnosisService diagnosisService;
+
+    @Autowired
+    private DiagnosisExcelUtils diagnosisExcelUtils;
     @GetMapping("/list")
     public Result queryList(@RequestParam("cur") String cur,@RequestParam("size")String size,
                             @RequestParam("name")String name,@RequestParam("status")String status){
@@ -42,5 +46,10 @@ public class DiagnosisController {
     @GetMapping("/info")
     public Result getInfo(){
         return  diagnosisService.diagnosisInfo();
+    }
+
+    @GetMapping("/excel")
+    public Result getExcel(){
+       return diagnosisExcelUtils.simpleWrite();
     }
 }

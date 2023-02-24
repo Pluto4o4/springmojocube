@@ -55,7 +55,33 @@ public class ReservationController {
 
   // 根据id获取信息
   @GetMapping("/reservation/selectById")
-  public Result selectById(@RequestBody(required = false) Reservation reservation) {
+  public Result selectById(@RequestParam(defaultValue = "1") Integer index,
+      @RequestParam(defaultValue = "10") Integer size,
+      @RequestParam(required = false) String id,
+      @RequestParam(required = false) String user_name,
+      @RequestParam(required = false) String user_sex,
+      @RequestParam(required = false) String user_age,
+      @RequestParam(required = false) String phone,
+      @RequestParam(required = false) String address,
+      @RequestParam(required = false) String status,
+      @RequestParam(required = false) String user_appoint,
+      @RequestParam(required = false) String department,
+      @RequestParam(required = false) String create_time,
+      @RequestParam(required = false) String appoint_time) {
+    Reservation reservation=new Reservation();
+    reservation.setId(id);
+    reservation.setSize(String.valueOf(size));
+    reservation.setIndex(String.valueOf(index));
+    reservation.setUser_age(user_age);
+    reservation.setUser_name(user_name);
+    reservation.setUser_sex(user_sex);
+    reservation.setPhone(phone);
+    reservation.setAddress(address);
+    reservation.setStatus(status);
+    reservation.setUser_appoint(user_appoint);
+    reservation.setDepartment(department);
+    reservation.setCreate_time(create_time);
+    reservation.setAppoint_time(appoint_time);
     Result result = this.reservationService.selectById(reservation);
     return result;
   }

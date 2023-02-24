@@ -53,8 +53,18 @@
   </update>
 
   <insert id="add" parameterType="com.gxa.springmojocube.entity.Reservation">
-    insert into appoint(<include refid="Base_Column_List"/>) values
-    (#{id},#{user_name},#{user_sex},#{user_age},#{phone},#{address},#{status},#{user_appoint},#{department},#{create_time},#{appoint_time});
+    insert into appoint(user_name,
+                        user_sex,
+                        user_age,
+                        phone,
+                        address,
+                        status,
+                        user_appoint,
+                        department,
+                        create_time,
+                        appoint_time)
+    values (#{user_name}, #{user_sex}, #{user_age}, #{phone}, #{address}, #{status},
+            #{user_appoint}, #{department}, #{create_time}, #{appoint_time});
   </insert>
 
   <update id="deleteByIds" parameterType="java.lang.String">

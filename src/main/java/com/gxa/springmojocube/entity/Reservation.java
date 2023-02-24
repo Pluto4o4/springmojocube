@@ -1,6 +1,7 @@
 package com.gxa.springmojocube.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -28,6 +29,8 @@ public class Reservation {
   private String department; // 部门
   private String create_time; // 创建时间
   private String appoint_time; // 预约时间
+  @TableField(exist = false)
   private String index;
+  @TableField(exist = false)
   private String size;
 }

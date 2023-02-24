@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gxa.springmojocube.entity.Diagnosis;
+import com.gxa.springmojocube.entity.Dto.DiagnosisTableDto;
 import com.gxa.springmojocube.entity.Qo.DiagnosisListQo;
 import com.gxa.springmojocube.entity.Qo.DiagnosisQo;
 import com.gxa.springmojocube.entity.Qo.PageQo;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author JiaFengYi
@@ -37,17 +39,17 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             page.setCurrent(Long.valueOf(qo.getCur()));
             page.setSize(Long.valueOf(qo.getSize()));
             QueryWrapper<Diagnosis> qw = new QueryWrapper<>();
-
-            if(!StringUtils.isNotBlank(qo.getName())){
-                qw.eq("name",qo.getName());
+            if(StringUtils.isNotBlank(qo.getName())){
+                qw.eq("user_name",qo.getName());
             }
-            if(!StringUtils.isNotBlank(qo.getStatus())){
+            if(StringUtils.isNotBlank(qo.getStatus())){
                 qw.eq("status",qo.getStatus());
             }
             Page<Diagnosis> pages = diagnosisMapper.selectPage(page,qw);
             res = pages.getRecords();
             log.info("结果为:{}",res);
         }catch (Exception e){
+            System.out.println(e);
             return new Result().error();
 
         }
@@ -75,6 +77,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             BeanUtils.copyProperties(diagnosisQo,diagnosis);
             diagnosisMapper.insert(diagnosis);
         }catch (Exception e){
+            log.info("异常为:{}",e);
             return new Result().error();
         }
         return new Result().ok();
@@ -92,6 +95,30 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             return new Result().error();
         }
         return new Result().ok();
+    }
+
+    @Override
+    public Result diagnosisInfo() {
+        //诊断总数
+        QueryWrapper<Diagnosis> qw = new QueryWrapper<>();
+        qw.select("id");
+        Long count = diagnosisMapper.selectCount(qw);
+        log.info("诊断总数{}",count);
+        //应收金额
+        String num1 =  diagnosisMapper.GetamountReceivable();
+        log.info("应收金额{}",num1);
+        //实收金额
+        String num2 = diagnosisMapper.GetAmountReceived();
+        log.info("应收金额{}",num2);
+        //取消总数
+        String num3 = diagnosisMapper.GetCancelCount();
+        log.info("应收金额{}",num3);
+        DiagnosisTableDto diagnosisTableDto = new DiagnosisTableDto();
+        diagnosisTableDto.setTotel(String.valueOf(count));
+        diagnosisTableDto.setCancelCount(num3);
+        diagnosisTableDto.setAmountReceived(num2);
+        diagnosisTableDto.setAmountReceivable(num1);
+        return new Result().ok(diagnosisTableDto);
     }
 
 

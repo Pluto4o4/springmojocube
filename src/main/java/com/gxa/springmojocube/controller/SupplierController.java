@@ -35,12 +35,16 @@ public class SupplierController {
                       @RequestParam(defaultValue = "10") Integer size,
                       @RequestParam(required = false) String supplierName,
                       @RequestParam(required = false) String type,
-                      @RequestParam(required = false) String status){
-      return supplierService.selectPage(index,size,supplierName,type,status);
+                      @RequestParam(required = false) String status,
+                      @RequestParam(required = false) String province,
+                      @RequestParam(required = false) String address,
+                      @RequestParam(required = false) String contacts){
+      return supplierService.selectPage(index,size,supplierName,type,status,province,address,contacts);
    }
 
    @GetMapping("/selectBySupplierName")
    public Result selectSupplierName(@RequestParam(required = false) String supplierName){
       return supplierService.selectSupplierName(supplierName);
    }
+
 }

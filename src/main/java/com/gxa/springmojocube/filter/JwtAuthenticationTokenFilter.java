@@ -43,7 +43,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
       }
 
       //3获取用户信息
-      LoginUser loginUser = (LoginUser) myCache.get(userId);
+      LoginUser loginUser = (LoginUser) myCache.get("userId:"+userId,60*60*24L);
       if (Objects.isNull(loginUser)) {
          throw new RuntimeException("当前用户未登录！");
       }

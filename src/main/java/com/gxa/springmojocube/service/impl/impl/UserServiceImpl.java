@@ -49,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements U
     LoginUser loginUser =(LoginUser)authentication.getPrincipal();
 
     String userId = loginUser.getUser().getId().toString();
-    myCache.put(userId,loginUser);
+    myCache.put("userId:"+userId,loginUser,60*60*24L);
     String userName=loginUser.getUser().getName();
     String jwt= JwtUtils.getJwtToken(userId,userName);
     Map<String ,String> map=new HashMap<>();
@@ -64,10 +64,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements U
   @Override
   public Result sendCode(String email) {
     result=new Result();
-    String code= RandomUtil.randomNumbers(6);
-    mailSenderUtil.sendEmailCode(code,"1782252415@qq.com",email);
-    myCache.put("email:"+email,code,10);
-    System.err.println(myCache.get("email:"+email));;
+    try {
+      String code= RandomUtil.randomNumbers(6);
+      mailSenderUtil.sendEmailCode(code,"3109599256@qq.com",email);
+      myCache.put("email:"+email,code,60*5L);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return result.error("验证码获取失败");
+    }
     return result.ok("验证码发送成功");
   }
 

@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 用户实体类
  *
@@ -22,6 +24,7 @@ public class User {
   private String pwd;
   private Integer status;  //状态：0正常，1禁用
   private String email;
+  private String createTime;
   @TableField(exist = false)
   private String code;
 }

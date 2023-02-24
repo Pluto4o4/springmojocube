@@ -39,11 +39,14 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
       return new Result().error("修改失败");
    }
    //分页查询所有,或按条件查询
-   public Result selectPage(Integer pageNumber, Integer pageSize,String supplierName,String type,String status) {
+   public Result selectPage(Integer pageNumber, Integer pageSize, String supplierName, String type, String status, String province, String address, String contacts) {
       Page<Supplier> page = query()
             .like(StringUtils.isNotBlank(supplierName), "supplier_name", supplierName)
             .eq(StringUtils.isNotBlank(type), "type", type)
             .eq(StringUtils.isNotBlank(status), "status", status)
+            .eq(StringUtils.isNotBlank(province), "province", province)
+            .eq(StringUtils.isNotBlank(address), "address", address)
+            .eq(StringUtils.isNotBlank(contacts), "contacts", contacts)
             .page(new Page<>(pageNumber, pageSize));
 
       List<Supplier> list = page.getRecords();

@@ -10,24 +10,25 @@ public class DelayTask<T> implements Delayed {
    private T task;//任务
    private Object data;
 
-   public DelayTask(T task, Long time,Object data) {
-      this.time = time;
+   public DelayTask(T task, Object data,Long time,TimeUnit unit) {
+      this.time = System.currentTimeMillis()+(time>0?unit.toMillis(time):0);
       this.task = task;
       this.data = data;
    }
 
    public long getDelay(TimeUnit unit) {
-      return unit.convert(this.time, TimeUnit.SECONDS);
+      return time-System.currentTimeMillis();
    }
 
    @Override
+
    public int compareTo(Delayed delayed) {
       // 过期时间长的放置在队列尾部
-      if (this.getDelay(TimeUnit.SECONDS) > getDelay(TimeUnit.SECONDS)) {
+      if (this.getDelay(TimeUnit.MILLISECONDS) > getDelay(TimeUnit.MILLISECONDS)) {
          return 1;
       }
       // 过期时间短的放置在队列头
-      if (this.getDelay(TimeUnit.SECONDS) < getDelay(TimeUnit.SECONDS)) {
+      if (this.getDelay(TimeUnit.MILLISECONDS) < getDelay(TimeUnit.MILLISECONDS)) {
          return -1;
       }
       return 0;

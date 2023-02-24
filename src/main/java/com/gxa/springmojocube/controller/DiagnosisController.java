@@ -38,4 +38,8 @@ public class DiagnosisController {
     public Result update(@RequestBody DiagnosisQo qo){
         return  diagnosisService.update(qo);
     }
+    @GetMapping("/info")
+    public Result getInfo(){
+        return  diagnosisService.diagnosisInfo();
+    }
 }

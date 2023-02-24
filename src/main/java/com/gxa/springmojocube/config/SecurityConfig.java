@@ -48,7 +48,7 @@ public class SecurityConfig {
             .antMatchers("/user/login","/user/code","/user/login")
             .anonymous()
             //没有token能访问, 有token必须验证
-            .antMatchers("/supplier/*","/drug/*")
+            .antMatchers("/supplier/*","/drug/*","/diagnosis/*")
             .permitAll()
             // 除上面外的所有请求全部需要鉴权认证
             .anyRequest()

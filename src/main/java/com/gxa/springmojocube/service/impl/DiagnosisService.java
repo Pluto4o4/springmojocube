@@ -19,4 +19,6 @@ public interface DiagnosisService {
 
     Result update(DiagnosisQo diagnosisQo);
 
+    Result diagnosisInfo();
+
 }

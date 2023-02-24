@@ -10,4 +10,8 @@ import org.apache.ibatis.annotations.Mapper;
  **/
 @Mapper
 public interface DiagnosisMapper extends BaseMapper<Diagnosis> {
+    String GetamountReceivable();
+    String GetAmountReceived();
+
+    String GetCancelCount();
 }

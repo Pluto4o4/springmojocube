@@ -38,18 +38,18 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     private DrugMapper drugMapper;
 
     @Override
-    public Result<List<Diagnosis>> diagnosisList(DiagnosisListQo qo) {
+    public Result<List<Diagnosis>> diagnosisList(String cur,String size,String name,String status) {
         List<Diagnosis> res = null;
         try {
             Page<Diagnosis> page = new Page<>();
-            page.setCurrent(Long.valueOf(qo.getCur()));
-            page.setSize(Long.valueOf(qo.getSize()));
+            page.setCurrent(Long.valueOf(cur));
+            page.setSize(Long.valueOf(size));
             QueryWrapper<Diagnosis> qw = new QueryWrapper<>();
-            if(StringUtils.isNotBlank(qo.getName())){
-                qw.eq("user_name",qo.getName());
+            if(StringUtils.isNotBlank(name)){
+                qw.eq("user_name",name);
             }
-            if(StringUtils.isNotBlank(qo.getStatus())){
-                qw.eq("status",qo.getStatus());
+            if(StringUtils.isNotBlank(status)){
+                qw.eq("status",status);
             }
             Page<Diagnosis> pages = diagnosisMapper.selectPage(page,qw);
             res = pages.getRecords();

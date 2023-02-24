@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2023/02/23/20:20
  **/
 public interface DiagnosisService {
-    Result<List<Diagnosis>> diagnosisList(DiagnosisListQo pageQo);
+    Result<List<Diagnosis>> diagnosisList(String cur,String size,String name,String status);
     Result delect(String id);
     Result add(DiagnosisQo diagnosisQo);
 

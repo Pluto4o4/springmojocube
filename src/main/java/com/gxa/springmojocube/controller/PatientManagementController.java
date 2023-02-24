@@ -25,6 +25,7 @@ public class PatientManagementController {
   // 查找所有
   @GetMapping("/patientmanagerment/query")
   public Result queryAll() {
+    System.out.println("abc");
     List<Patient> reservations = this.service.queryAll();
 
     return new Result().ok(reservations);

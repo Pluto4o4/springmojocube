@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.*;
 public class DiagnosisController {
     @Autowired
     private DiagnosisService diagnosisService;
-    @PostMapping("/list")
-    public Result queryList(@RequestBody DiagnosisListQo qo){
-        return diagnosisService.diagnosisList(qo);
+    @GetMapping("/list")
+    public Result queryList(@RequestParam("cur") String cur,@RequestParam("size")String size,
+                            @RequestParam("name")String name,@RequestParam("status")String status){
+        return diagnosisService.diagnosisList(cur,size,name,status);
     }
 
     @GetMapping("/delete")

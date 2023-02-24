@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gxa.springmojocube.entity.Diagnosis;
+import com.gxa.springmojocube.entity.DiagnosisExcel;
 import com.gxa.springmojocube.entity.Drug;
 import com.gxa.springmojocube.entity.Dto.DiagnosisTableDto;
 import com.gxa.springmojocube.entity.Qo.DiagnosisListQo;
@@ -15,6 +16,7 @@ import com.gxa.springmojocube.service.impl.DiagnosisService;
 import com.gxa.springmojocube.utils.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +61,10 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             return new Result().error();
 
         }
-        return new Result().ok(res);
+        Result<List<Diagnosis>> result = new Result<>();
+        result.setData(res);
+        result.setCount(String.valueOf(res.size()));
+        return result;
     }
 
     @Override
@@ -134,6 +139,20 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         diagnosisTableDto.setAmountReceivable(num1);
         diagnosisTableDto.setDrugs(drugsName);
         return new Result().ok(diagnosisTableDto);
+    }
+
+    @Override
+    public List<DiagnosisExcel> putOutExcel() {
+        QueryWrapper<Diagnosis> qw = new QueryWrapper<>();
+        List<Diagnosis> list = diagnosisMapper.selectList(qw);
+        List<DiagnosisExcel> res = new ArrayList<>();
+        list.stream().forEach(diagnosis -> {
+            DiagnosisExcel diagnosisExcel = new DiagnosisExcel();
+            BeanUtils.copyProperties(diagnosis,diagnosisExcel);
+            res.add(diagnosisExcel);
+        });
+        log.info("res结果{}",res);
+        return res;
     }
 
 

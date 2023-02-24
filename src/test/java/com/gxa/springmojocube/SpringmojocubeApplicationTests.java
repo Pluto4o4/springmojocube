@@ -1,7 +1,9 @@
 package com.gxa.springmojocube;
 
+import com.gxa.springmojocube.utils.DiagnosisExcelUtils;
 import com.gxa.springmojocube.utils.cache.MyCache;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -16,6 +18,8 @@ class SpringmojocubeApplicationTests {
 
   @Resource
   MyCache myCache;
+  @Autowired
+  private DiagnosisExcelUtils excelUtils;
   @Test
   void test1(){
     myCache.put("1","1",20);
@@ -32,6 +36,11 @@ class SpringmojocubeApplicationTests {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  @Test
+  void Excel(){
+    excelUtils.simpleWrite();
   }
 
 }

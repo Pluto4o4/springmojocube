@@ -64,7 +64,7 @@ public class MyCache {
 
    public void put(String k, Object v) {
       map.put(k, v);
-      this.put(() -> map.remove(k), 1000, TimeUnit.SECONDS);
+      this.put(() -> map.remove(k), 24*60*60L, TimeUnit.SECONDS);
    }
 
    public void put(String k, Object v,long time) {
@@ -98,13 +98,14 @@ public class MyCache {
    }
 
    public Object get(String k) {
-      return map.get(k);
+      DelayTask task=(DelayTask)map.get(k);
+      return task.getData();
    }
 
    public Object get(String k,Long time) {
       DelayTask task=(DelayTask)map.get(k);
       task.setTime(time);
-      return map.get(k);
+      return task.getData();
    }
 
    public boolean containsKey(String k) {
